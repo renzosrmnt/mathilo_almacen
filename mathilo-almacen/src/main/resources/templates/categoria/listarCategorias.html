@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/layout :: head}">
+	<title>Categorías | Mathilo </title>
+
+<body>
+
+	<header th:replace="~{layout/layout :: header}"></header>
+
+	<div class="container-fluid page-body-wrapper">
+
+
+		<div th:replace="~{layout/layout :: sidebar}"></div>
+
+		<div class="main-panel">
+
+			<div class="content-wrapper">
+				<div class="row">
+					<div class="col-lg-12 grid-margin stretch-card">
+						<div class="card">
+							<div class="card-body">
+								<h4 class="card-title" th:text="${titulo}"></h4>
+								<a th:href="@{/nueva-categoria}" class="btn btn-primary"><i
+										class="fas fa-plus-circle"></i> Agregar
+									categoría</a>
+								<div class="table-responsive mt-4">
+									<table class="table table-hover">
+										<thead>
+											<tr>
+												<th>ID</th>
+												<th>Nombre</th>
+												<th>Acciones</th>
+												
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="categoria : ${categorias}">
+												<td th:text="${categoria.id}"></td>
+												<td th:text="${categoria.nombre}"></td>
+												<td><a class="btn btn-inverse-info btn-icon"
+														th:href="@{/categoria/} + ${categoria.id}"><i
+															class="fas fa-info-circle"></i></a>
+												<a class="btn btn-inverse-success btn-icon"
+														th:href="@{/editar-categoria/} + ${categoria.id}"><i
+															class="fas fa-edit"></i></a>
+												<a class="btn btn-inverse-danger btn-icon"
+														th:href="@{/eliminar-categoria/} + ${categoria.id}"
+														onclick="return confirm('¿Estás seguro de eliminar al empleado?');"><i
+															class="fas fa-trash-alt"></i></a></td>
+											</tr>
+										</tbody>
+									</table>
+									<br>
+									<nav th:replace="~{paginator-nav :: paginator}"></nav>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<!-- content-wrapper -->
+
+			<!-- partial -->
+			<!-- partial:partials/_footer.html -->
+			<div th:replace="~{layout/layout :: footer}"></div>
+
+		</div>
+
+	</div>
+
+	<div th:replace="~{layout/layout :: scripts}"></div>
+</body>
+
+</html>

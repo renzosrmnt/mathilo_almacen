@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/layout :: head}">
+	<title>Entradas | Mathilo </title>
+</head>
+
+<body>
+
+	<header th:replace="~{layout/layout :: header}"></header>
+
+	<div class="container-fluid page-body-wrapper">
+
+		<div th:replace="~{layout/layout :: sidebar}"></div>
+
+		<div class="main-panel">
+
+			<div class="content-wrapper">
+				<div class="row">
+					<div class="col-lg-12 grid-margin stretch-card">
+						<div class="card">
+							<div class="card-body">
+								<h4 class="card-title" th:text="${titulo}"></h4>
+								<a th:href="@{/nueva-entrada}" class="btn btn-primary"><i
+										class="fas fa-plus-circle"></i> Agregar Entrada</a>
+								<div class="table-responsive mt-4">
+									<table class="table table-hover">
+										<thead>
+											<tr>
+												<th>ID</th>
+												<th>Artículo</th>
+												<th>Cantidad</th>
+												<th>Precio</th>
+												<th>Proveedor</th>
+												<th>Fecha</th>
+												<th>Acciones</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="entrada : ${entradas}">
+												<td th:text="${entrada.id}"></td>
+												<td th:text="${entrada.articulo.nombre}"></td>
+												<td th:text="${entrada.cantidad}"></td>
+												<td th:text="${entrada.precio}"></td>
+												<td th:text="${entrada.proveedor.nombre}"></td>
+												<td th:text="${#dates.format(entrada.fecha, 'yyyy-MM-dd')}"></td>
+												<td>
+													<a class="btn btn-inverse-info btn-icon"
+														th:href="@{/entrada/} + ${entrada.id}"><i
+															class="fas fa-info-circle"></i></a>
+													<a class="btn btn-inverse-success btn-icon"
+														th:href="@{/editar-entrada/} + ${entrada.id}"><i
+															class="fas fa-edit"></i></a>
+													<a class="btn btn-inverse-danger btn-icon"
+														th:href="@{/eliminar-entrada/} + ${entrada.id}"
+														onclick="return confirm('¿Estás seguro de eliminar la entrada?');"><i
+															class="fas fa-trash-alt"></i></a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<br>
+									<nav th:replace="~{paginator-nav :: paginator}"></nav>
+								</div
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<!-- content-wrapper -->
+
+			<!-- partial -->
+			<!-- partial:partials/_footer.html -->
+			<div th:replace="~{layout/layout :: footer}"></div>
+
+		</div>
+
+	</div>
+
+	<div th:replace="~{layout/layout :: scripts}"></div>
+</body>
+
+</html>

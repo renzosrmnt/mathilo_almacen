@@ -1,0 +1,15 @@
+/* Estilos generales */
+
+/* Media query para pantallas pequeñas (hasta 768px) */
+@media (max-width: 1200px) {
+    .container {
+        min-width: 920px; /* Establece un ancho mínimo para el contenedor */
+        /* Agrega otros estilos específicos para pantallas pequeñas aquí */
+    }
+}
+
+
+.imagen-pequena {
+    width: 100px;
+    height: auto;
+}
