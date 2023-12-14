@@ -19,40 +19,52 @@ import com.almacen.service.usuarioService.UserService;
 @Configuration
 public class SpringSecurityConfiguration {
 
-	@Autowired
-	private UserService userService;
+    @Autowired
+    private UserService userService;
 
-	@Bean
-	static BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    // Bean para la creación de un codificador de contraseñas
+    @Bean
+    static BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userService).passwordEncoder(new BCryptPasswordEncoder());
-	}
-	
-	@Bean
-	WebSecurityCustomizer webSecurityCustomizer() {
-	    return (web) -> web
-	      .ignoring()
-	      .requestMatchers("/css/**", "/js/**", "/favicon.ico", "/images/**",
-					"/fonts/**", "/scss/**", "/vendors/**");
-	}
+    // Configuración global para la autenticación
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService).passwordEncoder(new BCryptPasswordEncoder());
+    }
+    
+    // Customizador para ignorar ciertas rutas
+    @Bean
+    WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web
+          .ignoring()
+          .requestMatchers("/css/**", "/js/**", "/favicon.ico", "/images/**",
+                    "/fonts/**", "/scss/**", "/vendors/**");
+    }
 
-	@Bean
-	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		
-		// enable CSRF
+    // Configuración de las reglas de seguridad HTTP
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        // Configuración para habilitar CSRF
         http.cors(withDefaults())
-        .csrf(csrf -> csrf.disable())
+            .csrf(csrf -> csrf.disable())
 
-		.authorizeHttpRequests((authz) -> authz.requestMatchers("/registro/**").permitAll().anyRequest().authenticated())
-				.formLogin((formLogin) -> formLogin.loginPage("/login").permitAll())
-				.logout((logout) -> logout.logoutUrl("/logout").permitAll().invalidateHttpSession(true)
-						.clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-						.logoutSuccessUrl("/login?logout").permitAll());
-		return http.build();
-	}
+            // Reglas de autorización HTTP
+            .authorizeHttpRequests((authz) -> authz
+                .requestMatchers("/registro/**").permitAll() // Permite acceso sin autenticación a /registro/**
+                .anyRequest().authenticated()) // Requiere autenticación para cualquier otra solicitud
 
+            // Configuración del formulario de inicio de sesión y cierre de sesión
+            .formLogin((formLogin) -> formLogin
+                .loginPage("/login").permitAll()) // Página de inicio de sesión permitida para todos
+            .logout((logout) -> logout
+                .logoutUrl("/logout").permitAll() // URL de cierre de sesión permitida para todos
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login?logout").permitAll()); // Página de cierre de sesión permitida para todos
+
+        return http.build();
+    }
 }

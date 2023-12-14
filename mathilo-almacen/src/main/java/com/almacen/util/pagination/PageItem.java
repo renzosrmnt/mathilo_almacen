@@ -2,29 +2,31 @@ package com.almacen.util.pagination;
 
 public class PageItem {
 
-	private int numero;
-	private boolean actual;
+    private int numero; // Número de la página
+    private boolean actual; // Indica si es la página actual
 
-	public PageItem(int numero, boolean actual) {
-		super();
-		this.numero = numero;
-		this.actual = actual;
-	}
+    // Constructor que inicializa el número de página y si es la página actual
+    public PageItem(int numero, boolean actual) {
+        super();
+        this.numero = numero;
+        this.actual = actual;
+    }
 
-	public int getNumero() {
-		return numero;
-	}
+    // Getters y setters para los atributos de la clase
 
-	public void setNumero(int numero) {
-		this.numero = numero;
-	}
+    public int getNumero() {
+        return numero;
+    }
 
-	public boolean isActual() {
-		return actual;
-	}
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
 
-	public void setActual(boolean actual) {
-		this.actual = actual;
-	}
+    public boolean isActual() {
+        return actual;
+    }
 
+    public void setActual(boolean actual) {
+        this.actual = actual;
+    }
 }

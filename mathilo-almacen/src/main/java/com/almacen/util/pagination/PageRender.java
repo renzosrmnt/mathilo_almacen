@@ -14,6 +14,7 @@ public class PageRender<T> {
 	private int paginaActual;
 	private List<PageItem> paginas;
 
+	// Constructor que recibe la URL y la página de resultados
 	public PageRender(String url, Page<T> page) {
 		this.url = url;
 		this.page = page;
@@ -23,6 +24,8 @@ public class PageRender<T> {
 		totalPaginas = page.getTotalPages();
 		paginaActual = page.getNumber() + 1;
 
+		
+		// Lógica para calcular las páginas a mostrar en la paginación
 		int desde, hasta;
 		if (totalPaginas <= numElementosPorPagina) {
 			desde = 1;
@@ -45,6 +48,7 @@ public class PageRender<T> {
 		}
 	}
 
+	// Getters y setters para los atributos de la clase
 	public String getUrl() {
 		return url;
 	}
@@ -77,6 +81,8 @@ public class PageRender<T> {
 		this.paginas = paginas;
 	}
 	
+	
+	// Métodos para verificar si la página actual es la primera, última, tiene página siguiente o anterior
 	public boolean isFirst() {
 		return page.isFirst();
 	}
